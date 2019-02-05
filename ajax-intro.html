@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Paragraphe dynamique</title>
+    <meta charset="utf-8">
+    <script src="lib/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(() => {
+
+            $("#searchForm").submit(function (event) {
+                var data = $(this).serializeArray();
+                var url = "https://randomuser.me/api/?";
+                var params = [];
+                for (item of data) {
+                    params.push(item.name + "=" + item.value);
+                }
+                url += params.join("&");
+                searchUser(url);
+                event.preventDefault();
+            });
+
+            function searchUser(url) {
+                $.get(url, function (response) {
+                    var userData = response.results[0];
+                    console.log(userData);
+                    var message = "Bonjour c'est : " + userData.name.first
+                        + " " + userData.name.last + " agé(e) de :" + userData.dob.age + " ans";
+                    var telephone = " TEL :" + userData.phone;
+                    var email = "Adresse mail :" + userData.email;
+                    $("#title").text(message);
+                    $("#photo").attr("src", userData.picture.large);
+                    $("#phone").text(telephone);
+                    $("#email").text(email);
+
+                });
+            }
+
+        }); // Fin de la fonction ready
+    </script>
+    <style>
+    </style>
+</head>
+
+<body>
+
+    <form id="searchForm">
+        <div>
+            <input type="radio" name="gender" value="female">
+            <label>Femme</label>
+            <input type="radio" name="gender" value="male">
+            <label>Homme</label><br>
+        </div>
+        <div>
+            <br>
+            <select name="nat">
+                <option value="fr">Français</option>
+                <option value="de">Allemande</option>
+                <option value="ir">Iranien</option>
+                <option value="tr">Turquie</option>
+                <option value="br">Brasilien</option>
+            </select>
+        </div>
+        <div>
+            <br>
+            <button type="submit">Valider</button>
+        </div>
+    </form>
+    <h1 id="title"></h1>
+    <img id="photo">
+    <h4 id="phone"></h4>
+    <h4 id="email"></h4>
+</body>
+
+</html>

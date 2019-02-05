@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Jquery intro</title>
+    <meta charset="utf-8">
+    <script src="lib/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(() => {
+
+            $("h1").hide(4000).show(1000, () => {
+                $("p").css("color", "green").hide(2000);
+                $("h1").text("Jquery c'est super");
+                console.log("terminé");
+                console.log($("li").html());
+                $infoBulle.show(200);
+
+
+            });
+            console.log("This is the end");
+            // fonction callback
+            var newValues = ["Pascal", "color", "Ada"];
+            $("li")
+                .html((index, oldValue) => {
+                    return newValues[index] + "(" + oldValue + ")";
+                })
+                .css(
+                    {
+                        "color": "red",
+                        "font-size": "24px",
+                        "margin-left": "50px"
+                    }
+                )
+                .click(function () {
+                    $(this).css("color", "blue");
+
+                });
+
+            /*******************************************/
+            $("button").click(function () {
+                $(this).toggleClass("inactive");
+
+            });
+            /********************************************/
+            // creation d'info bulle
+            var $infoBulle = $("#infoBulle");
+            $("button").mouseenter(function (event) {
+                var y = (event.pageY - 10) + "px";
+                var x = event.pageX + "px";
+                $infoBulle.css("display", "block");
+                $infoBulle.css("top", y);
+                $infoBulle.css("left", x);
+            });
+            $("button").mouseleave(function () {
+                $infoBulle.css("display", "none");
+            });
+
+            $("button").mousemove(function (event) {
+                var y = (event.pageY - 10) + "px";
+                var x = event.pageX + "px";
+                $infoBulle.css("top", y);
+                $infoBulle.css("left", x);
+            });
+
+        });
+
+        $(document).ready(function () {
+
+            $('.li').hide();
+            $('.button').mouseenter(function () {
+                $('.li').show();
+            });
+            $('.button').mouseleave(function () {
+                $('.li').hide();
+            });
+
+
+        });
+    </script>
+    <style>
+        .inactive {
+            background-color: black;
+            color: rgb(0, 255, 64);
+            font-size: 20px;
+            margin-left: left 25px;
+        }
+
+        #infoBulle {
+            background-color: rgba(190, 177, 196, 0.61);
+            padding: 15px;
+            border-radius: 20px;
+            border: 15px;
+            width: 200px;
+            display: none;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="infoBulle">
+        Je suis infobulle <br>
+        ne me cliquez pas dessus<br>
+        je suis sensible.
+    </div>
+
+    <p>Je suis un paragraphe</p>
+    <h1> Bonjour c'est jquery</h1>
+    <ul>
+        <li>Javascript</li>
+        <li>Query</li>
+        <li>PHP</li>
+    </ul>
+    <button>Home</button>
+    <button>Contac</button>
+    <button>validez</button>
+
+
+</body>
+
+</html>

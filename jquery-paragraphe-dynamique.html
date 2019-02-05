@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Paragraphe dynamique</title>
+    <meta charset="utf-8">
+    <script src="lib/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            // cible des paragraphes
+            var$p = $("p");
+            // fonction de debut et fin d'edition
+            function startEdit() {
+                //définition de la cible
+                var $target = $(this);
+                //récuperation du text du paragraphe
+                var text = $target.text().trim();
+                // creation d'un element textarea
+                var $textArea = $("<textarea></textarea");
+                $textArea.text(text).attr({
+                    rows: "5",
+                    cols: "25"
+                });
+                //remplacement du paragraphe par la zone de text
+                $target.replaceWith($textArea);
+
+            }
+            function endEdit() {
+                var $target = $(this);
+                var text = $target.val();
+
+                var $para = $("<p></p>").text(text);
+                $target.replaceWith($para)
+
+            }
+            //liaison entre les fonctions et les evenements
+            var $body = $("body");
+            $body.delegate("p", "click", startEdit);
+
+            $body.delegate("textarea", "blur", endEdit);
+
+        });
+
+    </script>
+
+
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <p>
+        texte bidon
+    </p>
+
+</body>
+
+
+</html>

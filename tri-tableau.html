@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Liste des personnes</title>
+    <meta charset="utf-8">
+    <script src="lib/jquery-3.3.1.min.js"></script>
+    <h1>Liste de 20 personnes</h1>
+    <script>
+        $(document).ready(() => {
+            // ciblage de la table et du model d'une ligne
+            var $userTable = $("#userTable");
+            var $template = $("#rowTemplate");
+            //
+            var userList = [];
+            // requette ajax de récuperation des utilisateurs
+
+            $.get("https://randomuser.me/api/?results=20",
+                function (response) {
+                    userList = response.results;
+                    renderUserList(userList);
+                });
+            function renderUserList(data) {
+                data.forEach(renderSingleUser);
+            }
+
+            function renderSingleUser(user) {
+                // duplication du model
+                var $row = $template.clone().removeAttr("id");
+                // insertion des données dans la nouvelle ligne
+                $row.children().eq(0).children().attr("src", user.picture.large);
+                var $dataColumn = $row.children().eq(1);
+                $dataColumn.children().filter(".name").text(
+                    "Nom prénom : " + user.name.first + " " + user.name.last);
+                $dataColumn.children().filter(".age").text(
+                    " Age : " + user.dob.age + " ans"
+                );
+                $dataColumn.children().filter(".tel").text(
+                    "Tel : " + user.phone
+                );
+                // insertion du duplicata dans le dom
+                $userTable.append($row);
+
+            }
+        });
+    </script>
+    <style>
+        #rowTemplate {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <table id="userTable">
+        <tr>
+            <th>photo</th>
+            <th>User</th>
+            <th button type="submit">Validez</button> </th>
+        </tr>
+        <tr id="rowTemplate">
+            <td>
+                <img class="photo">
+            </td>
+            <td>
+                <h4 class="name"></h4>
+                <p class="age"></p>
+                <p class="tel"></p>
+            </td>
+
+        </tr>
+
+    </table>
+</body>
+
+</html>

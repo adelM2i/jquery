@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Paragraphe dynamique</title>
+    <meta charset="utf-8">
+    <script src="lib/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            $template = $("#template");
+            $bt = $("#btAddTel");
+            $container = $("#telContainer");
+            $bt.click(function () {
+                var $item = $template.clone().removeAttr("id").hide().hide();
+                $container.append($item);
+                $item.slideDown(500);
+            });
+            // suppression de parent
+            $container.delegate(".delete", "click", function () {
+                $(this).parent().fadeOut(700);
+            })
+        });
+        $(this).slideUp(560);
+    </script>
+    <style>
+        #template {
+    display: none;
+ 
+}
+    </style>
+</head>
+
+<body>
+    <div id="template">
+        <select name="telType[]">
+            <option>Domicile</option>
+            <option>Professionnel</option>
+            <option>Mobile</option>
+        </select>
+        <input type="tel" name="telNumber[]">
+        <button class="delete" type="button">Supprimez Tel</button>
+    </div>
+    <form>
+        <div>
+            <button id="btAddTel" type="button">Ajoutez tel</button>
+        </div>
+        <fieldset id="telContainer">
+            <legend>Téléphones</legend>
+        </fieldset>
+    </form>
+</body>
+
+</html>
